@@ -1,0 +1,10 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+p {
+  font-family: Lato;
+}
+.mar12 {
+  margin: 12px;
+}
+.pad12 {
+  padding: 12px;
+}

@@ -1,0 +1,23 @@
+<div class="card">
+	<img
+    ng-if="cardData.selected"
+    class="card-img-top"
+    src="{{cardData.imageUrl}}"
+    alt="{{cardData.alt}}"
+  />
+	<div class="selection card-body" ng-if="!cardData.selected">
+		<label for="browser">Choose your browser from the list:</label>
+		<input list="browsers" name="browser" id="browser" />
+		<datalist id="browsers">
+			<option value="place"> </option>
+		</datalist>
+	</div>
+	<div class="card-body">
+		<h5 class="card-title">Card title</h5>
+		<p class="card-text">
+			Some quick example text to build on the card title and make up the bulk of
+			the card's content.
+		</p>
+		<a href="#" class="btn btn-primary">Go somewhere</a>
+	</div>
+</div>
