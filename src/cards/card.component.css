@@ -13,3 +13,11 @@
 .pad12 {
   padding: 10px;
 }
+.card-img-top {
+  height: 250px !important;
+}
+.Mist {
+  background-image: url("https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ");
+  width: 100%;
+  background-size: cover;
+}

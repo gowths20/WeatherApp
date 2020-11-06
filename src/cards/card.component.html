@@ -1,16 +1,16 @@
 <div class="container-fluid">
-  <div class="row">
-    <div
-      class="col col-12 col-sm-4 col-md-4 col-lg-3"
-      *ngFor="let i of cardData"
-    >
-      <div class="card" (click)="enableInput()">
-        <!-- <img *ngIf="weatherData" src="..." class="card-img-top" alt="..." /> -->
-        <div class="nodata card-img-top"></div>
-        <div class="card-body">
-          <div class="pad12" *ngIf="i.selected">
-            <div class="input-group flex-nowrap">
-              <input
+	<div class="row">
+		<div class="col col-12 col-sm-4 col-md-4 col-lg-3" *ngFor="let i of cardData">
+			<div class="card" (click)="enableInput(i)">
+				<div class="data card-img-top " [ngClass]="i.data['main']" *ngIf="i.data"></div>
+				<div class="nodata card-img-top " *ngIf="!i.data">
+
+          
+        </div>
+				<div class="card-body">
+					<div class="pad12" *ngIf="i.selected && !i.data">
+						<div class="input-group flex-nowrap">
+							<input
                 type="text"
                 class="form-control"
                 placeholder="enter city name"
@@ -18,21 +18,29 @@
                 [(ngModel)]="i.inputVal"
                 aria-describedby="basic-addon1"
               />
-              <button class="btn btn-primary btn-block">check</button>
-            </div>
-          </div>
-
-          <!-- <div class="pad12">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
-      </p>
-    </div> -->
-        </div>
-      </div>
-    </div>
-  </div>
+							<button class="btn btn-primary btn-block" (click) = "updateData(i)">check</button>
+						</div>
+					</div>
+					<div class="pad12" *ngIf="i.data">
+						<h5 class="card-title">{{i.data["name"]}}</h5>
+						<p class="card-text">
+							{{i.data["main"]}}
+						</p>
+						<p class="card-text">
+							Temperature: {{i.data["temp"]}}
+						</p>
+						<p class="card-text">
+							Feels Like: {{i.data["feels_like"]}}
+						</p>
+						<p class="card-text">
+							Humidity: {{i.data["humidity"]}}
+						</p>
+						<button class="btn btn-primary btn-block">Edit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- <div class="card">
