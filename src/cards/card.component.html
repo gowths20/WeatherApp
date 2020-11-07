@@ -1,22 +1,30 @@
 <div class="container-fluid">
-	<div class="row">
-		<div class="col col-12 col-sm-6 col-md-4 col-lg-3 mar-bottom" *ngFor="let i of cardData; ">
-			<div class="card">
-
-				<div class="nodata card-img-top clear" [ngClass]="i.data['weather'][0]['main']" *ngIf="i.data">
-				</div>
-				<div class="nodata card-img-top " [ngClass]="{'error': i.error}" (click)="enableInput(i)"
-					*ngIf="!i.data && !i.selected">
-					<h2 class="text-center errorText" *ngIf="i.error"> Unable to find weather.
-					</h2>
-
-				</div>
-				<div class="card-body">
-
-					<div class="pad12" *ngIf="i.selected && !i.data">
-						<div id="loading" *ngIf="loading"></div>
-						<div class="input-group input-group-lg flex-nowrap mar-bottom">
-							<input
+  <div class="row">
+    <div
+      class="col col-12 col-sm-6 col-md-4 col-lg-3 mar-bottom"
+      *ngFor="let i of cardData; "
+    >
+      <div class="card">
+        <div
+          class="nodata card-img-top clear"
+          [ngClass]="i.data['weather'][0]['main']"
+          *ngIf="i.data"
+        ></div>
+        <div
+          class="nodata card-img-top "
+          [ngClass]="{'error': i.error}"
+          (click)="enableInput(i)"
+          *ngIf="!i.data && !i.selected"
+        >
+          <h2 class="text-center errorText" *ngIf="i.error">
+            Unable to find weather.
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="pad12" *ngIf="i.selected && !i.data">
+            <div id="loading" *ngIf="loading && i.selected"></div>
+            <div class="input-group input-group-lg flex-nowrap mar-bottom">
+              <input
                 type="text"
                 class="form-control"
                 placeholder="enter city name"
@@ -24,34 +32,41 @@
                 [(ngModel)]="i.inputVal"
                 aria-describedby="basic-addon1"
               />
+            </div>
+            <button
+              class="btn btn-primary btn-block mar-bottom"
+              (click)="updateData(i)"
+              [disabled]="i.inputVal == ''"
+            >
+              check
+            </button>
+          </div>
+          <div class="pad12" *ngIf="i.data">
+            <h2 class="card-title">{{i.data["name"]}}</h2>
+            <h5 class="card-text">
+              {{i.data["weather"][0]["main"]}}
+            </h5>
+            <p class="card-text">
+              <b>Temperature:</b> {{i.data["main"]["temp"]}}
+            </p>
+            <p class="card-text">
+              <b>Feels Like:</b> {{i.data["main"]["feels_like"]}}
+            </p>
+            <p class="card-text">
+              <b>Humidity:</b> {{i.data["main"]["humidity"]}}
+            </p>
+            <button class="btn btn-primary btn-block" (click)="editData(i)">
+              Edit
+            </button>
+          </div>
+        </div>
+        <p class="text-center" *ngIf="!i.selected">Click above to edit</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-						</div>
-							<button class="btn btn-primary btn-block mar-bottom" (click) = "updateData(i)"  [disabled]="i.inputVal == ''">check</button>
-						</div>
-						<div class="pad12" *ngIf="i.data">
-							<h2 class="card-title">{{i.data["name"]}}</h2>
-							<h5 class="card-text">
-								{{i.data["weather"][0]["main"]}}
-							</h5>
-							<p class="card-text">
-								<b>Temperature:</b> {{i.data["main"]["temp"]}}
-							</p>
-							<p class="card-text">
-								<b>Feels Like:</b> {{i.data["main"]["feels_like"]}}
-							</p>
-							<p class="card-text">
-								<b>Humidity:</b> {{i.data["main"]["humidity"]}}
-							</p>
-							<button class="btn btn-primary btn-block" (click) = "editData(i)">Edit</button>
-						</div>
-					</div>
-					<p class="text-center" *ngIf="!i.selected">Click above to edit</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- <div class="card">
+<!-- <div class="card">
 	<img
     ng-if="cardData.selected"
     class="card-img-top"
