@@ -1,6 +1,9 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+html,
+bosy,
+h1,
 p {
-  font-family: Lato;
+  font-family: "Times New Roman", Times, serif;
 }
 .mar12 {
   margin: 12px;
