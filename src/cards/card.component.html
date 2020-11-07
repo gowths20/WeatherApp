@@ -1,11 +1,14 @@
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
-		<div class="col col-12 col-sm-4 col-md-4 col-lg-3" *ngFor="let i of cardData; ">
+		<div class="col col-12 col-sm-4 col-md-3 col-lg-3 mar12" *ngFor="let i of cardData; ">
 			<div class="card">
-				<div class="data card-img-top " [ngClass]="i.data['main']" *ngIf="i.data"></div>
-				<div class="nodata card-img-top " [ngClass]="{'classno2': i.error}" (click)="enableInput(i)"
+				<div class="nodata card-img-top clear" [ngClass]="i.data['weather'][0]['main']" *ngIf="i.data">
+				</div>
+				<div class="nodata card-img-top " [ngClass]="{'error': i.error}" (click)="enableInput(i)"
 					*ngIf="!i.data && !i.selected">
-
+					<h2 class="text-center errorText" *ngIf="i.error"> May be this city is located in mars.Unable to
+						find
+					</h2>
 
 				</div>
 				<div class="card-body">
@@ -40,6 +43,7 @@
 							<button class="btn btn-primary btn-block" (click) = "editData(i)">Edit</button>
 						</div>
 					</div>
+					<p class="text-center" *ngIf="!i.selected">Click above to edit</p>
 				</div>
 			</div>
 		</div>

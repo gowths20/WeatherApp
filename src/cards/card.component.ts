@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable } from "rxjs";
-import { IndexedDBService } from "../app/indexdb.service";
 import { WeatherService } from "../app/weather.service";
 @Component({
   selector: "my-card",
@@ -11,17 +10,7 @@ export class CardComponent {
   cardData = [
     {
       selected: true,
-      data: {
-        name: "Madurai",
-        id: 701,
-        weather: [{ main: "Mist" }],
-        main: {
-          description: "mist",
-          temp: 298.15,
-          feels_like: 302.9,
-          humidity: 94
-        }
-      },
+      data:"",
       main: {},
       inputVal: "",
       error: false
@@ -79,14 +68,26 @@ export class CardComponent {
   constructor(private WeatherService: WeatherService) {}
 
   ngOnInit() {
-    // this.WeatherService.getWeather().subscribe(data => {
-    //   this.results = data;
-    //   console.log(this.results);
-    // });
+    if (this.readSessionStorage("weatherData")) {
+      this.cardData = this.readSessionStorage("weatherData");
+    } else {
+      this.writeSessionStorage(this.cardData, "weatherData");
+    }
   }
-
+  readSessionStorage(name) {
+    return JSON.parse(sessionStorage.getItem(name));
+  }
+  writeSessionStorage(data, name) {
+    sessionStorage.setItem(name, JSON.stringify(data));
+  }
+  getClass(data) {
+    return data.weather[0].main.toLowerCase() === "rain"
+      ? "nodata card-img-top rain"
+      : "nodata card-img-top clear";
+  }
   enableInput(data) {
     data.selected = !data.selected;
+    this.writeSessionStorage(this.cardData, "weatherData");
   }
   updateData(data) {
     this.WeatherService.getWeather(data.inputVal).subscribe(
@@ -94,11 +95,14 @@ export class CardComponent {
         this.results = res;
         console.log(this.results);
         data.data = this.results;
+        console.log(this.cardData);
+        this.writeSessionStorage(this.cardData, "weatherData");
       },
       err => {
         data.inputVal = "";
         data.selected = false;
         data.error = true;
+        this.writeSessionStorage(this.cardData, "weatherData");
       }
     );
   }
@@ -107,5 +111,6 @@ export class CardComponent {
     card.data = "";
     card.inputVal = "";
     card.selected = true;
+    this.writeSessionStorage(this.cardData, "weatherData");
   }
 }
