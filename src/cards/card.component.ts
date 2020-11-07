@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
+import { Observable } from "rxjs";
 import { IndexedDBService } from "../app/indexdb.service";
-
+import { WeatherService } from "../app/weather.service";
 @Component({
   selector: "my-card",
   templateUrl: "./card.component.html",
@@ -9,85 +10,102 @@ import { IndexedDBService } from "../app/indexdb.service";
 export class CardComponent {
   cardData = [
     {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
       selected: true,
       data: {
         name: "Madurai",
         id: 701,
-        main: "Mist",
-        description: "mist",
-        temp: 298.15,
-        feels_like: 302.9,
-        humidity: 94
+        weather: [{ main: "Mist" }],
+        main: {
+          description: "mist",
+          temp: 298.15,
+          feels_like: 302.9,
+          humidity: 94
+        }
       },
       main: {},
-      inputVal: ""
+      inputVal: "",
+      error: false
     },
     {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
+      selected: false,
+      data: "",
+      inputVal: "",
+      error: false
+    },
+    {
+      selected: false,
+      data: "",
+      inputVal: "",
+      error: false
+    },
+    {
+      selected: false,
+      data: "",
+      inputVal: "",
+      error: false
+    },
+    {
+      selected: false,
+      data: "",
+      inputVal: "",
+      error: false
+    },
+    {
+      selected: false,
+      data: "",
+      inputVal: "",
+      error: false
+    },
+    {
       selected: false,
       data: "",
       inputVal: ""
     },
     {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
       selected: false,
       data: "",
       inputVal: ""
     },
     {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
-      selected: false,
-      data: "",
-      inputVal: ""
-    },
-    {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
-      selected: false,
-      data: "",
-      inputVal: ""
-    },
-    {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
-      selected: false,
-      data: "",
-      inputVal: ""
-    },
-    {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
-      selected: false,
-      data: "",
-      inputVal: ""
-    },
-    {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
-      selected: false,
-      data: "",
-      inputVal: ""
-    },
-    {
-      imageUrl: "https://miro.medium.com/max/1250/0*Q2EFk7g36R0h8dAZ",
-      alt: "img",
       selected: false,
       data: "",
       inputVal: ""
     }
   ];
 
-  // constructor(private IndexedDBService: IndexedDBService) {
-  //   IndexedDBService.add("carddata", this.cardData);
-  // }
+  @Input()
+  results: Observable<any>;
+
+  constructor(private WeatherService: WeatherService) {}
+
+  ngOnInit() {
+    // this.WeatherService.getWeather().subscribe(data => {
+    //   this.results = data;
+    //   console.log(this.results);
+    // });
+  }
 
   enableInput(data) {
     data.selected = !data.selected;
   }
-  updateData(index) {}
+  updateData(data) {
+    this.WeatherService.getWeather(data.inputVal).subscribe(
+      res => {
+        this.results = res;
+        console.log(this.results);
+        data.data = this.results;
+      },
+      err => {
+        data.inputVal = "";
+        data.selected = false;
+        data.error = true;
+      }
+    );
+  }
+
+  editData(card) {
+    card.data = "";
+    card.inputVal = "";
+    card.selected = true;
+  }
 }

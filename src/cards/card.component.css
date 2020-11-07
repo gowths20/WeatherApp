@@ -3,15 +3,22 @@
   background: #b8b1b6;
   height: 150px;
 }
-.errorData {
+.error {
   background: red;
   height: 150px;
 }
+
 .card-body {
   padding: 15px !important;
 }
 .pad12 {
   padding: 10px;
+}
+.mar12 {
+  margin: 10px;
+}
+.mar-bottom {
+  margin-bottom: 10px;
 }
 .card-img-top {
   height: 250px !important;

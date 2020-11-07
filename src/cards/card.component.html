@@ -1,15 +1,16 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col col-12 col-sm-4 col-md-4 col-lg-3" *ngFor="let i of cardData; ">
-			<div class="card" (click)="enableInput(i)">
+			<div class="card">
 				<div class="data card-img-top " [ngClass]="i.data['main']" *ngIf="i.data"></div>
-				<div class="nodata card-img-top " *ngIf="!i.data">
+				<div class="nodata card-img-top " [ngClass]="{'classno2': i.error}" (click)="enableInput(i)"
+					*ngIf="!i.data && !i.selected">
 
 
 				</div>
 				<div class="card-body">
 					<div class="pad12" *ngIf="i.selected && !i.data">
-						<div class="input-group flex-nowrap">
+						<div class="input-group input-group-lg flex-nowrap mar-bottom">
 							<input
                 type="text"
                 class="form-control"
@@ -20,23 +21,23 @@
               />
 
 						</div>
-							<button class="btn btn-primary btn-block" (click) = "updateData(i)">check</button>
+							<button class="btn btn-primary btn-block mar-bottom" (click) = "updateData(i)">check</button>
 						</div>
 						<div class="pad12" *ngIf="i.data">
 							<h5 class="card-title">{{i.data["name"]}}</h5>
 							<p class="card-text">
-								{{i.data["main"]}}
+								{{i.data["weather"][0]["main"]}}
 							</p>
 							<p class="card-text">
-								Temperature: {{i.data["temp"]}}
+								Temperature: {{i.data["main"]["temp"]}}
 							</p>
 							<p class="card-text">
-								Feels Like: {{i.data["feels_like"]}}
+								Feels Like: {{i.data["main"]["feels_like"]}}
 							</p>
 							<p class="card-text">
-								Humidity: {{i.data["humidity"]}}
+								Humidity: {{i.data["main"]["humidity"]}}
 							</p>
-							<button class="btn btn-primary btn-block">Edit</button>
+							<button class="btn btn-primary btn-block" (click) = "editData(i)">Edit</button>
 						</div>
 					</div>
 				</div>
