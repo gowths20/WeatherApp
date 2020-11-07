@@ -9,8 +9,8 @@ import { WeatherService } from "../app/weather.service";
 export class CardComponent {
   cardData = [
     {
-      selected: true,
-      data:"",
+      selected: false,
+      data: "",
       main: {},
       inputVal: "",
       error: false
@@ -64,7 +64,7 @@ export class CardComponent {
 
   @Input()
   results: Observable<any>;
-
+  loading = false;
   constructor(private WeatherService: WeatherService) {}
 
   ngOnInit() {
@@ -78,18 +78,15 @@ export class CardComponent {
     return JSON.parse(sessionStorage.getItem(name));
   }
   writeSessionStorage(data, name) {
+    this.loading = false;
     sessionStorage.setItem(name, JSON.stringify(data));
-  }
-  getClass(data) {
-    return data.weather[0].main.toLowerCase() === "rain"
-      ? "nodata card-img-top rain"
-      : "nodata card-img-top clear";
   }
   enableInput(data) {
     data.selected = !data.selected;
     this.writeSessionStorage(this.cardData, "weatherData");
   }
   updateData(data) {
+    this.loading = true;
     this.WeatherService.getWeather(data.inputVal).subscribe(
       res => {
         this.results = res;

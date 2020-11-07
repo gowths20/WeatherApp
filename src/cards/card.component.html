@@ -1,7 +1,8 @@
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
-		<div class="col col-12 col-sm-4 col-md-3 col-lg-3 mar12" *ngFor="let i of cardData; ">
+		<div class="col col-12 col-sm-6 col-md-4 col-lg-3 mar-bottom" *ngFor="let i of cardData; ">
 			<div class="card">
+
 				<div class="nodata card-img-top clear" [ngClass]="i.data['weather'][0]['main']" *ngIf="i.data">
 				</div>
 				<div class="nodata card-img-top " [ngClass]="{'error': i.error}" (click)="enableInput(i)"
@@ -12,7 +13,9 @@
 
 				</div>
 				<div class="card-body">
+
 					<div class="pad12" *ngIf="i.selected && !i.data">
+						<div id="loading" *ngIf="loading"></div>
 						<div class="input-group input-group-lg flex-nowrap mar-bottom">
 							<input
                 type="text"
@@ -24,21 +27,21 @@
               />
 
 						</div>
-							<button class="btn btn-primary btn-block mar-bottom" (click) = "updateData(i)">check</button>
+							<button class="btn btn-primary btn-block mar-bottom" (click) = "updateData(i)"  [disabled]="i.inputVal == ''">check</button>
 						</div>
 						<div class="pad12" *ngIf="i.data">
-							<h5 class="card-title">{{i.data["name"]}}</h5>
-							<p class="card-text">
+							<h2 class="card-title">{{i.data["name"]}}</h2>
+							<h5 class="card-text">
 								{{i.data["weather"][0]["main"]}}
+							</h5>
+							<p class="card-text">
+								<b>Temperature:</b> {{i.data["main"]["temp"]}}
 							</p>
 							<p class="card-text">
-								Temperature: {{i.data["main"]["temp"]}}
+								<b>Feels Like:</b> {{i.data["main"]["feels_like"]}}
 							</p>
 							<p class="card-text">
-								Feels Like: {{i.data["main"]["feels_like"]}}
-							</p>
-							<p class="card-text">
-								Humidity: {{i.data["main"]["humidity"]}}
+								<b>Humidity:</b> {{i.data["main"]["humidity"]}}
 							</p>
 							<button class="btn btn-primary btn-block" (click) = "editData(i)">Edit</button>
 						</div>

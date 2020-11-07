@@ -41,7 +41,43 @@
   width: 100%;
   background-size: cover;
 }
+.Smoke {
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTcOHr_3BU6GlaV4ezyFM5MFfNJrdIZ_utNuA&usqp=CAU");
+  height: 250px !important;
+  width: 100%;
+  background-size: cover;
+}
+.Clouds {
+  background-image: url("https://scx2.b-cdn.net/gfx/news/2019/observingclo.jpg");
+  height: 250px !important;
+  width: 100%;
+  background-size: cover;
+}
+
 .errorText {
   color: #fff;
   padding-top: 25px;
+}
+#loading {
+  position: absolute;
+  top: 50px;
+  left: 40%;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
