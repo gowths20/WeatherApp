@@ -13,52 +13,61 @@ export class CardComponent {
       data: "",
       main: {},
       inputVal: "",
-      error: false
+      error: false,
+      loading:false
     },
     {
       selected: false,
       data: "",
       inputVal: "",
-      error: false
+      error: false,
+      loading:false
     },
     {
       selected: false,
       data: "",
       inputVal: "",
-      error: false
+      error: false,
+      loading:false
     },
     {
       selected: false,
       data: "",
       inputVal: "",
-      error: false
+      error: false,
+      loading:false
     },
     {
       selected: false,
       data: "",
       inputVal: "",
-      error: false
+      error: false,
+      loading:false
     },
     {
       selected: false,
       data: "",
       inputVal: "",
-      error: false
+      error: false,
+      loading:false
     },
     {
       selected: false,
       data: "",
-      inputVal: ""
+      inputVal: "",
+      loading:false
     },
     {
       selected: false,
       data: "",
-      inputVal: ""
+      inputVal: "",
+      loading:false
     },
     {
       selected: false,
       data: "",
-      inputVal: ""
+      inputVal: "",
+      loading:false
     }
   ];
 
@@ -87,18 +96,21 @@ export class CardComponent {
   }
   updateData(data) {
     this.loading = true;
+    data.loading = true;
     this.WeatherService.getWeather(data.inputVal).subscribe(
       res => {
         this.results = res;
         console.log(this.results);
         data.data = this.results;
         console.log(this.cardData);
+        data.loading = false;
         this.writeSessionStorage(this.cardData, "weatherData");
       },
       err => {
         data.inputVal = "";
         data.selected = false;
         data.error = true;
+        data.loading = false;
         this.writeSessionStorage(this.cardData, "weatherData");
       }
     );
